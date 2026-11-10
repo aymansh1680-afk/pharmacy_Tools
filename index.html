@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدوات طلاب الصيدلة</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>💊 أدوات طلاب الصيدلة</h1>
+        <p>مجموعة أدوات مساعدة لحسابات ودراسات الصيدلة</p>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="dose">حساب الجرعات</button>
+        <button class="tab-btn" data-tab="dilution">التخفيف</button>
+        <button class="tab-btn" data-tab="bmi">BMI</button>
+        <button class="tab-btn" data-tab="creatinine">تصفية الكرياتينين</button>
+        <button class="tab-btn" data-tab="half-life">نصف العمر</button>
+        <button class="tab-btn" data-tab="converter">محول الوحدات</button>
+    </nav>
+
+    <main>
+        <!-- 1. حساب الجرعات -->
+        <section class="tool active" id="dose">
+            <h2>حساب الجرعة حسب وزن المريض</h2>
+            <label>وزن المريض (كغ): <input type="number" id="doseWeight" step="0.1"></label>
+            <label>الجرعة (mg/kg): <input type="number" id="dosePerKg" step="0.01"></label>
+            <label>تركيز الدواء (mg/ml): <input type="number" id="doseConc" step="0.01"></label>
+            <button onclick="calcDose()">احسب</button>
+            <div class="result" id="doseResult"></div>
+        </section>
+
+        <!-- 2. التخفيف C1V1 = C2V2 -->
+        <section class="tool" id="dilution">
+            <h2>حساب التخفيف (C₁V₁ = C₂V₂)</h2>
+            <p>اترك الحقل الذي تريد حسابه فارغاً</p>
+            <label>C₁ التركيز الأول (%): <input type="number" id="c1" step="0.01"></label>
+            <label>V₁ الحجم الأول (ml): <input type="number" id="v1" step="0.01"></label>
+            <label>C₂ التركيز النهائي (%): <input type="number" id="c2" step="0.01"></label>
+            <label>V₂ الحجم النهائي (ml): <input type="number" id="v2" step="0.01"></label>
+            <button onclick="calcDilution()">احسب</button>
+            <div class="result" id="dilutionResult"></div>
+        </section>
+
+        <!-- 3. BMI -->
+        <section class="tool" id="bmi">
+            <h2>مؤشر كتلة الجسم (BMI)</h2>
+            <label>الوزن (كغ): <input type="number" id="bmiWeight" step="0.1"></label>
+            <label>الطول (سم): <input type="number" id="bmiHeight" step="0.1"></label>
+            <button onclick="calcBMI()">احسب</button>
+            <div class="result" id="bmiResult"></div>
+        </section>
+
+        <!-- 4. تصفية الكرياتينين -->
+        <section class="tool" id="creatinine">
+            <h2>تصفية الكرياتينين (Cockcroft-Gault)</h2>
+            <label>العمر (سنة): <input type="number" id="crAge"></label>
+            <label>الوزن (كغ): <input type="number" id="crWeight" step="0.1"></label>
+            <label>الكرياتينين في الدم (mg/dL): <input type="number" id="crSerum" step="0.01"></label>
+            <label>الجنس:
+                <select id="crGender">
+                    <option value="male">ذكر</option>
+                    <option value="female">أنثى</option>
+                </select>
+            </label>
+            <button onclick="calcCrCl()">احسب</button>
+            <div class="result" id="crResult"></div>
+        </section>
+
+        <!-- 5. نصف العمر -->
+        <section class="tool" id="half-life">
+            <h2>حساب نصف العمر / التركيز المتبقي</h2>
+            <label>التركيز الأولي (mg/L): <input type="number" id="hlC0" step="0.01"></label>
+            <label>نصف العمر (ساعة): <input type="number" id="hlT" step="0.1"></label>
+            <label>الزمن المنقضي (ساعة): <input type="number" id="hlTime" step="0.1"></label>
+            <button onclick="calcHalfLife()">احسب</button>
+            <div class="result" id="hlResult"></div>
+        </section>
+
+        <!-- 6. محول الوحدات -->
+        <section class="tool" id="converter">
+            <h2>محول الوحدات</h2>
+            <label>القيمة: <input type="number" id="convValue" step="0.01"></label>
+            <label>من:
+                <select id="convFrom">
+                    <option value="g">غرام (g)</option>
+                    <option value="mg">ميليغرام (mg)</option>
+                    <option value="mcg">ميكروغرام (mcg)</option>
+                    <option value="L">لتر (L)</option>
+                    <option value="ml">ميليلتر (ml)</option>
+                </select>
+            </label>
+            <label>إلى:
+                <select id="convTo">
+                    <option value="mg">ميليغرام (mg)</option>
+                    <option value="g">غرام (g)</option>
+                    <option value="mcg">ميكروغرام (mcg)</option>
+                    <option value="ml">ميليلتر (ml)</option>
+                    <option value="L">لتر (L)</option>
+                </select>
+            </label>
+            <button onclick="convertUnit()">حوّل</button>
+            <div class="result" id="convResult"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 - أدوات طلاب الصيدلة | <a href="https://github.com" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
